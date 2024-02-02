@@ -29,18 +29,21 @@ def _get_fact(id: str):
 def fact_show(id: str):
     fact = _get_fact(id)
     if fact is None:
-        return jsonify({"error": "Fact not found"}), HttpStatus.NOT_FOUND
+        return jsonify({"error": "Fact not found"}), HttpStatus.NOT_FOUND.value
     return jsonify(fact.to_dict()), HttpStatus.OK.value
 
 
 # Get a random fact
-# @facts_controller.route("/random", methods=["GET"])
-# def fact_random():
-#     fact = FactsModel.get_random()
-#     if fact is None:
-#         return jsonify({"error": "No musics available"}), HttpStatus.NOT_FOUND
+@facts_controller.route("/random", methods=["GET"])
+def fact_random():
+    fact = FactsModel.get_random()
+    if fact is None:
+        return (
+            jsonify({"error": "No facts available"}),
+            HttpStatus.NOT_FOUND.value
+            )
 
-#     return jsonify(fact.to_dict()), HttpStatus.OK
+    return jsonify(fact.to_dict()), HttpStatus.OK.value
 
 
 # @music_controller.route("/", methods=["POST"])

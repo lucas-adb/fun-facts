@@ -10,7 +10,7 @@ db.facts.insertMany([
     tags: ['sports', 'soccer']
   },
   {
-    fact: 'The world\'s oldest cat lived to 38 years and three days old. Creme Puff',
+    fact: 'The world\'s oldest cat, Creme Puff, lived to 38 years and three days old.',
     tags: ['animals']
   },
 ]);
