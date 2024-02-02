@@ -1,6 +1,5 @@
 from bson import ObjectId
-from flask import Blueprint, jsonify
-# from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request
 from models.facts_model import FactsModel
 from utils.http_status import HttpStatus
 
@@ -8,7 +7,7 @@ from utils.http_status import HttpStatus
 facts_controller = Blueprint("facts", __name__)
 
 
-# Gets all facts
+# Gets all facts:
 def _get_all_facts():
     facts = FactsModel.find()
     return [fact.to_dict() for fact in facts]
@@ -20,7 +19,7 @@ def facts_index():
     return jsonify(facts_list), HttpStatus.OK.value
 
 
-# Get a fact by its id
+# Get a fact by its id:
 def _get_fact(id: str):
     return FactsModel.find_one({"_id": ObjectId(id)})
 
@@ -33,7 +32,7 @@ def fact_show(id: str):
     return jsonify(fact.to_dict()), HttpStatus.OK.value
 
 
-# Get a random fact
+# Get a random fact:
 @facts_controller.route("/random", methods=["GET"])
 def fact_random():
     fact = FactsModel.get_random()
@@ -46,8 +45,9 @@ def fact_random():
     return jsonify(fact.to_dict()), HttpStatus.OK.value
 
 
-# @music_controller.route("/", methods=["POST"])
-# def music_post():
-#     new_music = MusicModel(request.json)
-#     new_music.save()
-#     return jsonify(new_music.to_dict()), HttpStatus.CREATED
+# Create a new fact:
+@facts_controller.route("/", methods=["POST"])
+def fact_post():
+    new_fact = FactsModel(request.json)
+    new_fact.save()
+    return jsonify(new_fact.to_dict()), HttpStatus.CREATED.value
